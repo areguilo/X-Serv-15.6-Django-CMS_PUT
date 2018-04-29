@@ -21,7 +21,7 @@ def contentPage(request, identifier):
             return HttpResponse(response)
         except Pages.DoesNotExist:
             return HttpResponse("There are not pages for this object")
-    else
+    else:
         page = Pages(name = identifier, page = request.body)
         page.save()
         return HttpResponse( page.name + "created")
