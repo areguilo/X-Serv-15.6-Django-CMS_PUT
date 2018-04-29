@@ -14,10 +14,14 @@ def mainPage(request):
     return HttpResponse(response)
 
 def contentPage(request, identifier):
-    print ("entra")
-    try:
-        object = Pages.objects.get(name = identifier)
-        response = object.page + '<br><br><a href=http://localhost:8000/> Return to Main menu </a>'
-        return HttpResponse(response)
-    except Pages.DoesNotExist:
-        return HttpResponse("There are not pages for this object")
+    if request.method == "GET":
+        try:
+            object = Pages.objects.get(name = identifier)
+            response = object.page + '<br><br><a href=http://localhost:8000/> Return to Main menu </a>'
+            return HttpResponse(response)
+        except Pages.DoesNotExist:
+            return HttpResponse("There are not pages for this object")
+    else
+        page = Pages(name = identifier, page = request.body)
+        page.save()
+        return HttpResponse( page.name + "created")
